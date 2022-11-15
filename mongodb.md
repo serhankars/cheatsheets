@@ -1,13 +1,13 @@
 1.INTRODUCTION
 ============
 
-Creating a database:
+How to create a database in MongoDB?
 -------------------
 <pre>
   <b>use</b> dataBaseName
 </pre>
 
-Creating a collection:
+How to create a collection in MongoDB?
 ---------------------
 <pre>
 db.<b>createCollection</b>( '<collectionName>',
@@ -32,37 +32,40 @@ writeConcern: <document>
 
 <pre>
 use yourDatabaseName;
-db.myCollectionName.<b>insert<b>(
-                           {"name" : "Yahya A", "company" : "Sony"}
+db.myCollectionName.<b>insert</b>(
+                                  {"name" : "Yahya A", "company" : "Sony"}
 );
 </pre>
 
-----------------------------------------------
-SEE COLLECTIONS
-----------------------------------------------
-show collections;
+How to list collections in MongoDB?
+-----------------------------------
+<pre>
+ <b>show collections;</b>
+</pre>
 
-----------------------------------------------
-INSERT ONE DOCUMENT
-----------------------------------------------
-db.blogs.insertOne(
-{ username: "Zakariya", noOfBlogs: 100, tags: ["science",
-"fiction"]
-})
+How to insert a single document in MongoDB?
+-----------------------------------
+<pre>
+db.blogs.<b>insertOne</b>(
+                  { 
+                    username: "Zakariya", 
+                    noOfBlogs: 100, 
+                    tags: ["science","fiction"]
+                  }
+);
+</pre>
 
+How to insert many documents in MongoDB?
 ----------------------------------------------
-INSERT MANY DOCUMENTS
-----------------------------------------------
-db.blogs.insertMany(
-[
-{ username: "Thaha", noOfBlogs: 200, tags: ["science",
-"robotics"]},
-{ username: "Thayebbah", noOfBlogs: 500, tags: ["cooking",
-"general knowledge"]},
-{ username: "Thaherah", noOfBlogs: 50, tags: ["beauty",
-"arts"]}
-])
-
+<pre>
+db.blogs.<b>insertMany</b>(
+                    [
+                     { username: "Thaha", noOfBlogs: 200, tags: ["science","robotics"]},
+                     { username: "Thayebbah", noOfBlogs: 500, tags: ["cooking","general knowledge"]},
+                     { username: "Thaherah", noOfBlogs: 50, tags: ["beauty","arts"]}
+                    ]
+);
+</pre>
 
 ------------------------------------------------
 FETCHING DOCUMENTS FROM MONGODB
