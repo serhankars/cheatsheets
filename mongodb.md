@@ -67,14 +67,14 @@ db.blogs.<b>insertMany</b>(
 );
 </pre>
 
+How to fetch documents in MongoDB?
 ------------------------------------------------
-FETCHING DOCUMENTS FROM MONGODB
-------------------------------------------------
-db.collection.find(query, projection)
+<pre>
+db.collection.<br>find(query, projection)</br>
+<pre>
 
-------------------------------------------------
 2 DECLARING NUMBERS FROM MONGOSHELL
-------------------------------------------------
+============
 var explicitInt = NumberInt("1299")
 var explicitLong_double = NumberLong(444333222111242)
 
