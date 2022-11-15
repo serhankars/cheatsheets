@@ -1,12 +1,13 @@
 1.INTRODUCTION
 ============
 
-Creating a database
+Creating a database:
 -------------------
-**use** dataBaseName
+`**use** dataBaseName`
 
-CREATING A COLLECTION:
-db.createCollection( '<collectionName>',
+Creating a collection:
+---------------------
+db.**createCollection**( '<collectionName>',
 {
 capped: <boolean>,
 autoIndexId: <boolean>,
