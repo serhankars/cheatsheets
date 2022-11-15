@@ -71,19 +71,21 @@ How to fetch documents in MongoDB?
 ------------------------------------------------
 <pre>
 db.collection.<br>find(query, projection)</br>
-<pre>
+</pre>
 
-2 DECLARING NUMBERS FROM MONGOSHELL
+2.DECLARING NUMBERS FROM MONGOSHELL
 ============
-var explicitInt = NumberInt("1299")
-var explicitLong_double = NumberLong(444333222111242)
+<pre>
+var explicitInt = <br>NumberInt</br>("1299")
+var explicitLong_double = <br>NumberLong</br>(444333222111242)
 
-var uniqueID = new ObjectId()
-uniqueId.getTimestamp();  // print document insertion time
+var uniqueID = new <br>ObjectId()</br>;
+uniqueId.<br>getTimestamp()</br>;  // print document insertion time
 
-var date = Date() // will be in local timezeone
-var date = new  Date() //If you add the new keyword to the constructor, you get the BSON date that is wrapped in ISODate()
-var date = ISODate()
+var date = <br>Date()</br>; // will be in local timezeone
+var date = <br>new  Date()</br>; //If you add the new keyword to the constructor, you get the BSON date that is wrapped in ISODate()
+var date = <br>ISODate()</br>;
+</pre>
 
 var binData = BinData(0,"VghASDI10ZGUUu")
 The first argument to BinData is a binary subtype to indicate the type of information stored. 
