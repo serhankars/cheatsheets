@@ -9,7 +9,8 @@ Creating a database:
 
 Creating a collection:
 ---------------------
-db.**createCollection**( '<collectionName>',
+<pre>
+db.<b>createCollection</b>( '<collectionName>',
 {
 capped: <boolean>,
 autoIndexId: <boolean>,
@@ -25,16 +26,16 @@ pipeline: <pipeline>,
 collation: <document>,
 writeConcern: <document>
 })
+</pre>
 
-----------------------------------------------
-INSERT CREATES A COLLECTION IF IT DOESNT EXIST
-----------------------------------------------
+> **Insert creates a collection if it doesn't exists:**
+
+<pre>
 use yourDatabaseName;
-db.myCollectionName.insert(
-{
-"name" : "Yahya A", "company" : "Sony"}
+db.myCollectionName.<b>insert<b>(
+                           {"name" : "Yahya A", "company" : "Sony"}
 );
-
+</pre>
 
 ----------------------------------------------
 SEE COLLECTIONS
@@ -69,7 +70,7 @@ FETCHING DOCUMENTS FROM MONGODB
 db.collection.find(query, projection)
 
 ------------------------------------------------
-DECLARING NUMBERS FROM MONGOSHELL
+2 DECLARING NUMBERS FROM MONGOSHELL
 ------------------------------------------------
 var explicitInt = NumberInt("1299")
 var explicitLong_double = NumberLong(444333222111242)
@@ -104,7 +105,7 @@ db.createView(
 db.short_movie_info.findOne()
 
 -------------------------------------------------
-QUERYING DATA
+3QUERYING DATA
 -------------------------------------------------
 db.users.find({"name":"David"})
 
