@@ -1,5 +1,9 @@
-CREATING A DATABASE:
-use dataBaseName
+1.INTRODUCTION
+============
+
+Creating a database
+-------------------
+**use** dataBaseName
 
 CREATING A COLLECTION:
 db.createCollection( '<collectionName>',
