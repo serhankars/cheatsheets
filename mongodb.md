@@ -3,9 +3,9 @@
 
 Creating a database:
 -------------------
-```mongo
-  use dataBaseName
-```
+<pre>
+  <b>use</b> dataBaseName
+</pre>
 
 Creating a collection:
 ---------------------
