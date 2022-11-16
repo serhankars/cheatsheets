@@ -297,8 +297,8 @@ db.movies.find(
 ).<b>skip(2)</b>  
 
 db.movies.find(
-			{"cast" : "Charles Chaplin"},
-			{"title" : 1, "_id" :0}
+			         {"cast" : "Charles Chaplin"},
+			         {"title" : 1, "_id" :0}
 ).<b>sort({"title" : 1}) //1:ascending -1:descending</b>
 </pre>
 ------------------------------------
@@ -330,16 +330,16 @@ db.new_movies.<b>deleteMany({"title" : {"$regex": "^movie"}})</b>
 // [3] you can project deleted item
 
 db.new_movies.<b>findOneAndDelete</b>( 
-                                  {"title" : {"$regex" : "^movie"}},
-                                  {<b>sort</b> : {"_id" : -1}}
+                                      {"title" : {"$regex" : "^movie"}},
+                                      {<b>sort</b> : {"_id" : -1}}
 )
 
 db.new_movies.<b>findOneAndDelete</b>(
-                                  {"title" : {"$regex" : "^movie"}},
-                                  {
-                                   <b>sort</b> : {"_id" : -1}, 
-                                   <b>projection</b> : {"_id" : 0, "title" : 1}
-                                  }
+                                      {"title" : {"$regex" : "^movie"}},
+                                      {
+                                       <b>sort</b> : {"_id" : -1}, 
+                                       <b>projection</b> : {"_id" : 0, "title" : 1}
+                                      }
 )
 </pre>
 
@@ -366,7 +366,7 @@ db.movies.<b>findOneAndReplace</b>(
                                    {"title" : "Macbeth", "latest" : true},
                                    {
                                     <b>sort:</b> {"_id" : -1},
-                                    <b>projection:</b> {"_id" : 0}
+                                    <b>projection:</b> {"_id" : 0},
 					                          <b>returnNewDocument:</b> true
                                    }
 )
@@ -488,33 +488,33 @@ db.movies.<b>findOneAndUpdate</b>(
 ### Removing Fields ($unset):
 <pre>
 //values have no effect
-db.movies.findOneAndUpdate(
-                           {"title" : "Macbeth"},
-                           {
-                             <b>$unset :</b> {
-                                       "created_date" : "",
-                                       "last_updated" : "dummy_value",
-                                       "box_office_collection": 142.2,
-                                       "imdb" : null,
-                                       "flag" : ""
-                                      }
-                           },
-                           {returnNewDocument : true}
-                          )
+db.movies.<b>findOneAndUpdate</b>(
+                                  {"title" : "Macbeth"},
+                                  {
+                                    <b>$unset :</b> {
+                                                     "created_date" : "",
+                                                     "last_updated" : "dummy_value",
+                                                     "box_office_collection": 142.2,
+                                                     "imdb" : null,
+                                                     "flag" : ""
+                                                     }
+                                  },
+                                  {returnNewDocument : true}
+)
 </pre>
 
 ### Setting When Inserted ($setOnInsert):
 <pre>
-db.movies.findOneAndUpdate(
-                            {"title":"Macbeth"},
-                            {
-                              $rename:{"comments":"num_mflix_comments"},
-                              <b>$setOnInsert:</b>{"created_time":new Date()}
-                            },
-                            {
-                              upsert : true,
-                              returnNewDocument:true
-                            }
+db.movies.<b>findOneAndUpdate</b>(
+                                  {"title":"Macbeth"},
+                                  {
+                                    $rename:{"comments":"num_mflix_comments"},
+                                    <b>$setOnInsert:</b>{"created_time":new Date()}
+                                  },
+                                  {
+                                   upsert : true,
+                                   returnNewDocument:true
+                                  }
 )
 </pre>
 ------------------------
