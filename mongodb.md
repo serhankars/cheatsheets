@@ -425,7 +425,7 @@ db.movies.<b>findOneAndUpdate</b>(
 
 Some update operators in MongoDB
 --------------------------------
-### Set ($set)
+### Set ($set):
 <pre>
 db.movies.<b>updateMany</b>(
                      {"year" : 2015},
@@ -489,17 +489,17 @@ db.movies.<b>findOneAndUpdate</b>(
 <pre>
 //values have no effect
 db.movies.<b>findOneAndUpdate</b>(
-                                  {"title" : "Macbeth"},
-                                  {
-                                    <b>$unset :</b> {
-                                                     "created_date" : "",
-                                                     "last_updated" : "dummy_value",
-                                                     "box_office_collection": 142.2,
-                                                     "imdb" : null,
-                                                     "flag" : ""
-                                                     }
-                                  },
-                                  {returnNewDocument : true}
+                         {"title" : "Macbeth"},
+                         {
+                          <b>$unset :</b>{
+                                    "created_date" : "",
+                                    "last_updated" : "dummy_value",
+                                    "box_office_collection": 142.2,
+                                    "imdb" : null,
+                                    "flag" : ""
+                                          }
+                         },
+                         {returnNewDocument : true}
 )
 </pre>
 
@@ -521,84 +521,100 @@ db.movies.<b>findOneAndUpdate</b>(
 
 5.UPDATING WITH AGGREGATION PIPELINE AND ARRAYS
 =================
-db.users.updateMany( {},
+### Aggregation Pipeline Example
+<pre>
+db.users.<b>updateMany</b>( {},
                      [
-                      {$set : {"name_array" : {$split : ["$full_name", " "]}},},
+                      {<b>$set :</b> {"name_array" : {<b>$split :</b> [<b>"$full_name"</b>, " "]}},},
                       {
-                        $set: {
-                               "first_name" : {"$arrayElemAt" : ["$name_array", 0]},
-                               "last_name" : {"$arrayElemAt" : ["$name_array", 1]}
+                        <b>$set:</b> {
+                               "first_name" : {<b>"$arrayElemAt" : ["$name_array", 0]</b>},
+                               "last_name" : {<b>"$arrayElemAt" : ["$name_array", 1]</b>}
                                }
                       },
                       {
-                         $project : {
+                         <b>$project :<b> {
                                      "first_name" : 1,
                                      "last_name" : 1,
                                      "full_name" : {
-                                                     $concat : [{$toUpper : "$first_name"}, " ", "$last_name"]
+                                                     <b>$concat :<b> [<b>{$toUpper : "$first_name"}<b>, " ", "$last_name"]
                                                    }
                                     }
                       }
                      ]
 )
+</pre>
 
-db.movies.findOneAndUpdate(
+How to push/add a single element to an array field in MongoDB?
+--------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {_id : 111},
-                           {$push : {"genre" : "unknown"}},
+                           {<b>$push :</b> {"genre" : "unknown"}},
                            {"returnNewDocument" : true}
 )
+</pre>
 
-
-db.movies.findOneAndUpdate(
+How to push/add a multiple elements to an array field in MongoDB?
+--------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {_id : 111},
-                           {$push : {
+                           {<b>$push :</b> {
                                      "genre" : {
-                                                $each : ["History", "Action"]
+                                                <b>$each :</b> ["History", "Action"]
                                                }
                                     }
                            },
                            {"returnNewDocument" : true}
 )
 
-
-db.movies.findOneAndUpdate(
+<b>// you can sort an array field, after pushing an item</b>
+db.movies.<b>findOneAndUpdate</b>(
                            {_id : 111},
-                           {$push : {
+                           {<b>$push :</b> {
                                      "genre" : {
                                                 $each : [],
-                                                $sort : 1
+                                                <b>$sort : 1</b> 
                                                 }
                                     }
                            },
                            {"returnNewDocument" : true}
 )
 
-//sorts using properties of array items
-db.items.findOneAndUpdate(
+<b>// you can sort using propepties of array items</b>
+db.items.<b>findOneAndUpdate</b>(
                           {_id : 11},
-                          {$push : {
+                          {<b>$push :</b> {
                                     "items" : {
                                                 $each : [],
-                                                $sort : {"price" : -1}
+                                                <b>$sort : {"price" : -1}</b>
                                               } 
                                    }
                           },
                           {"returnNewDocument" : true}
 )
+</pre>
 
-//$addToSet adds only unique elements
-db.movies.findOneAndUpdate(
+How to add only unique items to an array field in MongoDB? (as a set)
+-------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {_id : 111},
-                           {$addToSet : {"genre" : "Action"}},
+                           {<b>$addToSet :</b> {"genre" : "Action"}},
                            {"returnNewDocument" : true }
 )
+</pre>
 
-//Removing the First or Last Element ($pop)
-db.movies.findOneAndUpdate(
+How to delete first/last element of an array field in MongoDB?
+-------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
 					{_id : 111},
-					{$pop : {"genre" : 1}},      //1:removes last element, -1: removes first element
+					{<b>$pop :</b>{"genre" : <b>1</b>}}, //1:removes <b>last</b> element, -1: removes <b>first</b> element
 					{"returnNewDocument" : true }
 )
+</pre>
 
 //Removing All Elements with a value
 db.movies.findOneAndUpdate(
