@@ -421,97 +421,106 @@ db.movies.<b>findOneAndUpdate</b>(
 					                   <b>"sort" :</b> {"_id" : -1}
                            }
 )
+</pre>
 
+Some update operators in MongoDB
+--------------------------------
+### Set ($set)
+<pre>
 db.movies.<b>updateMany</b>(
                      {"year" : 2015},
                      {<b>$set :</b> {"languages" : ["English"]}}
 )
 </pre>
 
-Some update operators in MongoDB
---------------------------------
-Set ($set)
-
-Increment ($inc):
-db.movies.findOneAndUpdate(
+### Increment ($inc):
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {"title" : "Macbeth"},
-                           {$inc : {"num_mflix_comments" : 3, "rating" : 1.5}},
+                           {<b>$inc :</b> {"num_mflix_comments" : 3, "rating" : 1.5}},
                            {returnNewDocument : true}
 )
+</pre>
 
-
-Multiply ($mul):
+### Multiply ($mul):
+<pre>
 // When using a non-existent field with $mul, we should always remember that no matter what
 // multiplier we provide, the field will be created and always set to zero
-db.movies.findOneAndUpdate(
+db.movies.<b>findOneAndUpdate</b>(
                            {"title" : "Macbeth"},
-                           {$mul : {"rating" : 2}},
+                           {<b>$mul :</b> {"rating" : 2}},
                            {returnNewDocument : true}
 )
+</pre>
 
-Rename ($rename):
-//The provided field and its new name must be different. 
-//If they're the same, the operation fails with an error
-
-db.movies.findOneAndUpdate(
+### Rename ($rename):
+> The provided field and its new name must be different. 
+> if they're the same, the operation fails with an error
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {"title" : "Macbeth"},
-                           {$rename : {"num_mflix_comments" : "comments",
+                           {<b>$rename :</b> {"num_mflix_comments" : "comments",
                                        "imdb_rating" : "rating"}},
                            {returnNewDocument : true}
 )
 
-
-db.movies.findOneAndUpdate(
+// a field can be moved to nested document.
+db.movies.<b>findOneAndUpdate</b>(
                             {"title" : "Macbeth"},
-                            {$rename : {"rating" : "imdb.rating"}}, // a field can be moved to nested document.
+                            {<b>$rename :</b> {"rating" : <b>"imdb.rating"</b>}},
                             {returnNewDocument : true}
 )
+</pre>
 
-Current Date ($currentDate):
-db.movies.findOneAndUpdate(
+### Current Date ($currentDate):
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {"title" : "Macbeth"},
-                           {$currentDate : {
+                           {<b>$currentDate :</b> {
                                              "created_date" : true, // defaults type to Date type
-                                             "last_updated.date" : {$type : "date"},
-                                             "last_updated.timestamp" : {$type : "timestamp"},
+                                             "last_updated.date" : <b>{$type : "date"}</b>,
+                                             "last_updated.timestamp" : <b>{$type : "timestamp"}</b>,
                                            }},
                            {returnNewDocument : true}
 )
+</pre>
 
-
-Removing Fields ($unset):
+### Removing Fields ($unset):
+<pre>
 //values have no effect
 db.movies.findOneAndUpdate(
                            {"title" : "Macbeth"},
                            {
-                             $unset : {
+                             <b>$unset :</b> {
                                        "created_date" : "",
                                        "last_updated" : "dummy_value",
                                        "box_office_collection": 142.2,
                                        "imdb" : null,
                                        "flag" : ""
                                       }
-                          },
-                          {returnNewDocument : true}
-)
+                           },
+                           {returnNewDocument : true}
+                          )
+</pre>
 
-Setting When Inserted ($setOnInsert):
+### Setting When Inserted ($setOnInsert):
+<pre>
 db.movies.findOneAndUpdate(
                             {"title":"Macbeth"},
                             {
                               $rename:{"comments":"num_mflix_comments"},
-                              $setOnInsert:{"created_time":new Date()}
+                              <b>$setOnInsert:</b>{"created_time":new Date()}
                             },
                             {
                               upsert : true,
                               returnNewDocument:true
                             }
 )
+</pre>
+------------------------
 
-
-*******************************************************
-CHAPTER 6 UPDATING WITH AGGREGATION PIPELINE AND ARRAYS
-*******************************************************
+5.UPDATING WITH AGGREGATION PIPELINE AND ARRAYS
+=================
 db.users.updateMany( {},
                      [
                       {$set : {"name_array" : {$split : ["$full_name", " "]}},},
