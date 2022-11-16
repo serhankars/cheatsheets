@@ -610,9 +610,9 @@ How to delete first/last element of an array field in MongoDB?
 -------------------
 <pre>
 db.movies.<b>findOneAndUpdate</b>(
-					{_id : 111},
-					{<b>$pop :</b>{"genre" : <b>1</b>}}, //1:removes <b>last</b> element, -1: removes <b>first</b> element
-					{"returnNewDocument" : true }
+                           {_id : 111},
+                           {<b>$pop :</b>{"genre" : <b>1</b>}}, //1:removes <b>last</b> element, -1: removes <b>first</b> element
+                           {"returnNewDocument" : true }
 )
 </pre>
 
@@ -742,7 +742,7 @@ db.movies.aggregate(pipeline).forEach(printjson);
 
 // $trunc stage to give integer value
 {$project: {
-            "roundedAvgRuntime": { <b>$trunc:<b> "$avgRuntime"}
+            "roundedAvgRuntime": { <b>$trunc:</b> "$avgRuntime"}
 }}
 </pre>
 
@@ -771,37 +771,44 @@ var pipeline = [
 ];
 </pre>
 
-// $first accumulator is used to choose first element of the group
-{ $group: {
+#### $first (to choose first element of the group)
+<pre>
+{ <b>$group:</b> {
            _id: {"$arrayElemAt": ["$genres", 0]},
-           "recommended_title": {$first: "$title"},
-           "recommended_rating": {$first: "$imdb.rating"},
-           "recommended_raw_runtime": {$first: "$runtime"},
+           "recommended_title": {<b>$first:</b> "$title"},
+           "recommended_rating": {<b>$first:</b> "$imdb.rating"},
+           "recommended_raw_runtime": {<b>$first:</b> "$runtime"},
            "popularity": { $avg: "$imdb.rating"},
            "top_movie": { $max: "$imdb.rating"},
-           "longest_runtime": { $max: "$runtime"}
+           "longest_runtime": { <b>$max:</b> "$runtime"}
           }
 },
+</pre>
 
-//$sample
-// The primary reason is that $limit always respects the order of the documents 
-// and thus returns the same documents every time
-{ $sample: {size: 100}}, // This will reduce the scope to
-100 random docs.
+How to randomly sample a certain amount of documents in MongoDB?
+----------------
+> <b>$limit</b> always respects the order of the documents and thus returns the same documents every time.
+<pre>
+{ <b>$sample:</b> {size: 100}}, // This will reduce the scope to 100 random docs.
+</pre>
 
-//$lookup: JOINING TWO COLLECTIONS
+How to join two collections in MongoDB?
+----------------
+<pre>
 var pipeline = [
                 { $match: { $or: [{"name": "Catelyn Stark"},{"name": "Ned Stark"}]}},
-                { $lookup: {
-                             from: "comments",
-                             localField: "name",
-                             foreignField: "name",
-                             as: "comments"
+                { <b>$lookup:</b> {
+                             <b>from:</b> "comments", // collection to join
+                             <b>localField:</b> "name", // the field to link in original collection
+                             <b>foreignField:</b> "name", // the field to link from "from" collection
+                             <b>as:</b> "comments" // the new field name in the result
                             }
                 },
                 { $limit: 2},
 ];
 db.users.aggregate(pipeline).forEach(printjson);
+</pre>
+
 
 //$unwind
 Converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}
@@ -867,10 +874,11 @@ var options = {
 }
 db.movies.aggregate(pipeline, options);
 
+-----------------------------
 
-***************************************************
-	           INDEXES IN MONGODB
-***************************************************
+6.INDEXES IN MONGODB
+============================
+<pre>
 db.movies.explain().find(
                           {
                            "year" : 2015
@@ -879,18 +887,18 @@ db.movies.explain().find(
                            "title" : 1,
                            "awards.wins" : 1
                           }
-                         ).sort(
-                                {"awards.wins" : -1}
-                               )
+                         ).sort({"awards.wins" : -1})
+</pre>
 
-explain() function can take an optional parameter:verbosityMode
-Possible Values:
-queryPlanner: default option, print query planner detail, rejected plans, winning plan, execution stagesof winning plan 
-executionStats: Useful for finding performance related problems
-allPlansExecution: 
+> **explain()** function can take an optional parameter:verbosityMode
 
+**Possible Values:**
+* queryPlanner: default option, print query planner detail, rejected plans, winning plan, execution stagesof winning plan 
+* executionStats: Useful for finding performance related problems
+* allPlansExecution: 
 
-//CREATING INDEX
+How to create index in MongoDB?
+---------------------
 db.movies.createIndex(
                       {year: 1} //1 is ascending
 )
