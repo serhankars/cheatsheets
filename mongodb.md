@@ -207,7 +207,7 @@ db.movies.<b>find</b>(
 )
 
 // <b>querying with an array value:</b> Array values must match <b>exactly</b> (order etc.)
-db.movies.<b>find<b>(
+db.movies.<b>find</b>(
                 <b>{"languages" : ["German", "English"]}</b>
 )
 
