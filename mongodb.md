@@ -73,24 +73,23 @@ How to fetch documents in MongoDB?
 db.collection.<br>find(query, projection)</br>
 </pre>
 
-2.DECLARING NUMBERS FROM MONGOSHELL
+2.SOME DATATYPES IN MONGODB
 ============
 <pre>
-var explicitInt = <br>NumberInt</br>("1299")
-var explicitLong_double = <br>NumberLong</br>(444333222111242)
+var explicitInt = <b>NumberInt</b>("1299")
+var explicitLong_double = <b>NumberLong</b>(444333222111242)
 
-var uniqueID = new <br>ObjectId()</br>;
-uniqueId.<br>getTimestamp()</br>;  // print document insertion time
+var uniqueID = new <b>ObjectId()</b>;
+uniqueId.<b>getTimestamp()</b>;  // print document insertion time
 
-var date = <br>Date()</br>; // will be in local timezeone
-var date = <br>new  Date()</br>; //If you add the new keyword to the constructor, you get the BSON date that is wrapped in ISODate()
-var date = <br>ISODate()</br>;
+var date = <b>Date()</b>; // will be in local timezeone
+var date = <b>new  Date()</b>; //If you add the new keyword to the constructor, you get the BSON date that is wrapped in ISODate()
+var date = <b>ISODate()</b>;
+
+
+var binData = <b>BinData(0,"VghASDI10ZGUUu")</b>
+> The first argument to BinData is a binary subtype to indicate the type of information stored.  The zero value stands for plain binary data and can be used with text or media files.
 </pre>
-
-var binData = BinData(0,"VghASDI10ZGUUu")
-The first argument to BinData is a binary subtype to indicate the type of information stored. 
-The zero value stands for plain binary data and can be used with text or media files.
-
 ------------------------------------------------
 DATABASE COMMANDS
 ------------------------------------------------
