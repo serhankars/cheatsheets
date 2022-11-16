@@ -215,7 +215,7 @@ db.movies.<b>find<b>(
 // the elements, irrespective of their order or size:
 db.movies.<b>find</b>(
                       {
-                       "languages":{<b>"$all" :[ "English", "French", "Cantonese"]<b>}
+                       "languages":{<b>"$all" :[ "English", "French", "Cantonese"]</b>}
                       }
 )
 </pre>
@@ -306,111 +306,130 @@ db.movies.find(
 4.INSERT, UPDATE, DELETE OPERATIONS
 ==============
 
-db.collection.insert( <Document To Be Inserted>)
-
-db.new_movies.insertMany([
+How to insert documents in MongoDB?
+--------------------
+<pre>
+db.collection.<b>insert(<Document To Be Inserted>)</b>
+db.new_movies.<b>insertMany([
                           {"_id" : 2, "title": "Baby Driver"},
                           {"_id" : 3, "title": "Logan"},
                           {"_id" : 4, "title": "John Wick: Chapter 2"},
                           {"_id" : 5, "title": "A Ghost Story"}
-])
+])</b>
+</pre>
 
+How to delete documents in MongoDB?
+--------------------
+<pre>
+db.new_movies.<b>deleteOne({"_id": 2})</b>
+db.new_movies.<b>deleteMany({"title" : {"$regex": "^movie"}})</b>
 
-db.new_movies.deleteOne({"_id": 2})
-db.new_movies.deleteMany({"title" : {"$regex": "^movie"}})
+// Difference <b>findOneAndDelete</b> of from deleteOne: 
+// [1] you can sort before delete,
+// [2] returns deleted item
+// [3] you can project deleted item
 
-//Difference from deleteOne: you can sort before delete,
-// returns deleted item
-// you can project deleted item
-
-db.new_movies.findOneAndDelete( 
-{"title" : {"$regex" : "^movie"}},
-{sort : {"_id" : -1}}
+db.new_movies.<b>findOneAndDelete</b>( 
+                                  {"title" : {"$regex" : "^movie"}},
+                                  {<b>sort</b> : {"_id" : -1}}
 )
 
-
-db.new_movies.findOneAndDelete(
-{"title" : {"$regex" : "^movie"}},
-           {
-            sort : {"_id" : -1}, 
-            projection : {"_id" : 0, "title" : 1}
-           }
+db.new_movies.<b>findOneAndDelete</b>(
+                                  {"title" : {"$regex" : "^movie"}},
+                                  {
+                                   <b>sort</b> : {"_id" : -1}, 
+                                   <b>projection</b> : {"_id" : 0, "title" : 1}
+                                  }
 )
+</pre>
 
-
-db.users.replaceOne(
+How to replace documents in MongoDB?
+--------------------
+<pre>
+db.users.<b>replaceOne(
                     {"_id" : 5},
-                    {"name": "Margaery Baratheon", "email": "Margaery.Baratheon@got.es"} //no _id field in the updated document
+                    {"name": "Margaery Baratheon", "email": "Margaery.Baratheon@got.es"} // beware: no _id field in the updated document
 )
+</b>
 
-//UPSERT OPTION
-db.users.replaceOne(
+// <b>upsert</b> option: insert if not found
+db.users.<b>replaceOne</b>(
                     {"name" : "Margaery Baratheon"},
                     {"name": "Margaery Tyrell", "email": "Margaery.Tyrell@got.es"},
-                    { upsert: true }
+                    { <b>upsert:</b> true }
 )
+</pre>
 
-db.movies.findOneAndReplace(
-                             {"title" : "Macbeth"}, 
-                             {"title" : "Macbeth", "latest" : true},
-                             {
-                               sort : {"_id" : -1},
-                               projection : {"_id" : 0}
-					    returnNewDocument : true
-                             }
+<pre>
+db.movies.<b>findOneAndReplace</b>(
+                                   {"title" : "Macbeth"}, 
+                                   {"title" : "Macbeth", "latest" : true},
+                                   {
+                                    <b>sort:</b> {"_id" : -1},
+                                    <b>projection:</b> {"_id" : 0}
+					                          <b>returnNewDocument:</b> true
+                                   }
 )
+</pre>
 
-var deletedDocument = db.movies.findOneAndDelete(
-{"title" : "Macbeth"},
-{sort : {"_id" : -1}}
+**Its effect is equal to:**
+
+<pre>
+<b>var deletedDocument</b> = db.movies.<b>findOneAndDelete</b>(
+                                                               {"title" : "Macbeth"},
+                                                               {sort : {"_id" : -1}}
+                                                              );
+db.movies.<b>insert</b>(
+                 {"_id" : deletedDocument._id, "title" : "Macbeth", "latest" : true}
 )
-db.movies.insert(
-{"_id" : deletedDocument._id, "title" : "Macbeth", "latest" : true}
-)
+</pre>
 
-
-db.movies.updateOne(
+How to update documents in MongoDB?
+--------------------
+<pre>
+db.movies.<b>updateOne</b>(
                     {"title" : "Macbeth"},
-                    {$set : {"year" : 2015}}
+                    {<b>$set :</b> {"year" : 2015}}
 )
 
-//can be used to update multiple fields in the same command,
-//and if a field is new, it will be added to the document
-db.movies.updateOne(
+// can be used to update multiple fields in the same command,
+// and if a field is new, it will be added to the document
+db.movies.<b>updateOne</b>(
                     {"title" : "Macbeth"},
-                    {$set : {"type" : "movie", "num_mflix_comments" : 1}}
+                    { <b>$set :</b> {"type" : "movie", "num_mflix_comments" : 1}}
 )
 
 //If not found it is inserted and and it will even have title field.
-db.movies.updateOne(
+db.movies.<b>updateOne</b>(
                     {"title" : "Sicario"},
                     {$set : {"year" : 2015}},
                     {"upsert" : true}
 )
 
-//By default it returns the old document
-db.movies.findOneAndUpdate(
+// <b>by default it returns the old document</b>
+db.movies.<b>findOneAndUpdate</b>(
                           {"title" : "Macbeth"},
-                          {$set : {"num_mflix_comments" : 10}}
+                          { <b>$set :</b> {"num_mflix_comments" : 10}}
 )
 
-
-db.movies.findOneAndUpdate(
+db.movies.<b>findOneAndUpdate</b>(
                            {"title" : "Macbeth"},
-                           {$set : {"num_mflix_comments" : 15}},
+                           {<b>$set :</b> {"num_mflix_comments" : 15}},
                            {
-                             "projection" : {"_id" : 0, "num_mflix_comments" : 1},
-                             "returnNewDocument" : true,
-					  "sort" : {"_id" : -1}
+                             <b>"projection" :</b> {"_id" : 0, "num_mflix_comments" : 1},
+                             <b>"returnNewDocument" :</b> true,
+					                   <b>"sort" :</b> {"_id" : -1}
                            }
 )
 
-db.movies.updateMany(
+db.movies.<b>updateMany</b>(
                      {"year" : 2015},
-                     {$set : {"languages" : ["English"]}}
+                     {<b>$set :</b> {"languages" : ["English"]}}
 )
+</pre>
 
-//UPDATE OPERATORS
+Some update operators in MongoDB
+--------------------------------
 Set ($set)
 
 Increment ($inc):
