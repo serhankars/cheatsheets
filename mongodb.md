@@ -893,31 +893,49 @@ db.movies.explain().find(
 > **explain()** function can take an optional parameter:verbosityMode
 
 **Possible Values:**
-* queryPlanner: default option, print query planner detail, rejected plans, winning plan, execution stagesof winning plan 
-* executionStats: Useful for finding performance related problems
-* allPlansExecution: 
+* "queryPlanner": default option, print query planner detail, rejected plans, winning plan, execution stagesof winning plan 
+* "executionStats": Useful for finding performance related problems
+* "allPlansExecution": 
 
 How to create index in MongoDB?
 ---------------------
-db.movies.createIndex(
+<pre>
+db.movies.<b>createIndex</b>(
                       {year: 1} //1 is ascending
 )
+</pre>
 
+How to list indexes on a collection in MongoDB?
+---------------------
+<pre>
+db.movies.<b>getIndexes()</b>
+</pre>
 
-db.movies.getIndexes()
-
-db.theaters.createIndex( 
+How to give a specific name to indexes in MongoDB?
+---------------------
+<pre>
+db.theaters.<b>createIndex</b>( 
                         {theaterId : -1},
-                        {name : "myTheaterIdIndex"}
+                        <b>{name : "myTheaterIdIndex"}</b>
 );
+</pre>
 
-db.movies.createIndex(
-                      {year : 1, rated : 1} //compound index
-)
 
-db.theaters.createIndex(
-                        { "location.address.zipcode" : 1}
+How to create indexes with multiple fields in MongoDB?
+---------------------
+<pre>
+db.movies.<b>createIndex</b>(
+                      <b>{year : 1, rated : 1}</b> //compound index
 )
+</pre>
+
+How to create indexes on subdocument's fields in MongoDB?
+---------------------
+<pre>
+db.theaters.<b>createIndex</b>(
+                        { <b>"location.address.zipcode" :</b> 1}
+)
+<pre>
 
 db.theaters.createIndex(
                         { "location" : 1}
