@@ -160,7 +160,7 @@ Logical Operators
 ------------------
 <pre>
 db.movies.<b>countDocuments</b>(
-                                 {<b>$and: [{"rated" : "UNRATED"}, {"year" : 2008}]</b>}
+                    {<b>$and: [{"rated" : "UNRATED"}, {"year" : 2008}]</b>}
 )
 
 db.movies.<b>find</b>(
@@ -174,9 +174,9 @@ db.movies.<b>find</b>(
 <b>$nor:</b> The $nor operator is syntactically like $or but behaves in the opposite way.
 
 db.movies.<b>find</b>(
-                      {
-                        "num_mflix_comments" :<b>{$not : {$gte : 5} }</b>
-                      }
+              {
+                 "num_mflix_comments" :<b>{$not : {$gte : 5} }</b>
+              }
 )
 
 db.movies.<b>find</b>(
@@ -184,11 +184,11 @@ db.movies.<b>find</b>(
 )
 
 db.movies.<b>find</b>(
-	             {"title" : <b>{$regex :"^Opera"}</b>}  // that <b>starts</b> with Opera
+	          {"title" : <b>{$regex :"^Opera"}</b>}  // that <b>starts</b> with Opera
 )
 
 db.movies.<b>find</b>(
-	             {"title" : <b>{$regex :"Opera$"}</b>} //that <b>ends</b> with Opera
+	          {"title" : <b>{$regex :"Opera$"}</b>} //that <b>ends</b> with Opera
 )
 
 db.movies.<b>find</b>(
@@ -214,9 +214,9 @@ db.movies.<b>find</b>(
 // the <b>$all</b> operator finds all those documents where the value of the field contains all
 // the elements, irrespective of their order or size:
 db.movies.<b>find</b>(
-                      {
-                       "languages":{<b>"$all" :[ "English", "French", "Cantonese"]</b>}
-                      }
+              {
+                "languages":{<b>"$all" :[ "English", "French", "Cantonese"]</b>}
+              }
 )
 </pre>
 
@@ -291,12 +291,12 @@ db.movies.find(
 
 > The skip() operation does not make use of any indexes, so it performs nicely on a smaller collection but may lag noticeably on larger collections.
 <pre>
-db.movies.find(
-			         {"cast" : "Charles Chaplin"},
-			         {"title": 1, "_id" :0}
+db.movies.<b>find</b>(
+       {"cast" : "Charles Chaplin"},
+		   {"title": 1, "_id" :0}
 ).<b>skip(2)</b>  
 
-db.movies.find(
+db.movies.<b>find</b>(
 			         {"cast" : "Charles Chaplin"},
 			         {"title" : 1, "_id" :0}
 ).<b>sort({"title" : 1}) //1:ascending -1:descending</b>
@@ -330,16 +330,16 @@ db.new_movies.<b>deleteMany({"title" : {"$regex": "^movie"}})</b>
 // [3] you can project deleted item
 
 db.new_movies.<b>findOneAndDelete</b>( 
-                                      {"title" : {"$regex" : "^movie"}},
-                                      {<b>sort</b> : {"_id" : -1}}
+                            {"title" : {"$regex" : "^movie"}},
+                            {<b>sort</b> : {"_id" : -1}}
 )
 
 db.new_movies.<b>findOneAndDelete</b>(
-                                      {"title" : {"$regex" : "^movie"}},
-                                      {
-                                       <b>sort</b> : {"_id" : -1}, 
-                                       <b>projection</b> : {"_id" : 0, "title" : 1}
-                                      }
+                            {"title" : {"$regex" : "^movie"}},
+                            {
+                              <b>sort</b> : {"_id" : -1}, 
+                              <b>projection</b> : {"_id" : 0, "title" : 1}
+                            }
 )
 </pre>
 
@@ -354,9 +354,9 @@ db.users.<b>replaceOne(
 
 // <b>upsert</b> option: insert if not found
 db.users.<b>replaceOne</b>(
-                    {"name" : "Margaery Baratheon"},
-                    {"name": "Margaery Tyrell", "email": "Margaery.Tyrell@got.es"},
-                    { <b>upsert:</b> true }
+                {"name" : "Margaery Baratheon"},
+                {"name": "Margaery Tyrell", "email": "Margaery.Tyrell@got.es"},
+                { <b>upsert:</b> true }
 )
 </pre>
 
@@ -376,9 +376,9 @@ db.movies.<b>findOneAndReplace</b>(
 
 <pre>
 <b>var deletedDocument</b> = db.movies.<b>findOneAndDelete</b>(
-                                                               {"title" : "Macbeth"},
-                                                               {sort : {"_id" : -1}}
-                                                              );
+                                                      {"title" : "Macbeth"},
+                                                      {sort : {"_id" : -1}}
+                                                  );
 db.movies.<b>insert</b>(
                  {"_id" : deletedDocument._id, "title" : "Macbeth", "latest" : true}
 )
@@ -506,15 +506,15 @@ db.movies.<b>findOneAndUpdate</b>(
 ### Setting When Inserted ($setOnInsert):
 <pre>
 db.movies.<b>findOneAndUpdate</b>(
-                                  {"title":"Macbeth"},
-                                  {
-                                    $rename:{"comments":"num_mflix_comments"},
-                                    <b>$setOnInsert:</b>{"created_time":new Date()}
-                                  },
-                                  {
-                                   upsert : true,
-                                   returnNewDocument:true
-                                  }
+                          {"title":"Macbeth"},
+                          {
+                             $rename:{"comments":"num_mflix_comments"},
+                          <b>$setOnInsert:</b>{"created_time":new Date()}
+                          },
+                          {
+                            upsert : true,
+                            returnNewDocument:true
+                          }
 )
 </pre>
 ------------------------
@@ -672,94 +672,104 @@ db.items.<b>findOneAndUpdate</b>(
                           }
 )
 </pre>
+---------------------------
 
-*******************************************************
-CHAPTER 7 DATA AGGREGATION
-*******************************************************
+6.DATA AGGREGATION
+============================
+#### Syntax:
+<pre>
 use sample_mflix;
-var pipeline = [] // The pipeline is an array of stages.
+var pipeline = [] // the pipeline is an array of stages.
 var options = {} 
-var cursor = db.movies.aggregate(pipeline, options);
+var cursor = db.movies.<b>aggregate(pipeline, options);</b>
+</pre>
 
-
+#### Example 1:
+<pre>
 var pipeline = [
-                { $match: { "location.address.state": "MN"} },
-                { $project: { "location.address.city": 1 } },
-                { $sort: { "location.address.city": 1 } },
-                { $limit: 3 }
+                { <b>$match:</b> { "location.address.state": "MN"} },
+                { <b>$project:</b> { "location.address.city": 1 } },
+                { <b>$sort:</b> { "location.address.city": 1 } },
+                { <b>$limit:</b> 3 }
 ];
+db.theaters.<b>aggregate(pipeline)</b>
+db.theaters.<b>aggregate(pipeline).forEach(printjson);</b>
+</pre>
 
-
-db.theaters.aggregate(pipeline)
-
-db.theaters.aggregate(pipeline).forEach(printjson);
-
-
-
+#### Example 2:
+<pre>
 var pipeline = [
-{ $match: {genres: "Romance", released: {$lte: new ISODate("2001-01-01T00:00:00Z") }}},
-{ $sort: {"imdb.rating": -1}}, 
-{ $limit: 3 },
+                { <b>$match:</b> {genres: "Romance", released: {<b>$lte: new ISODate("2001-01-01T00:00:00Z") </b>}}},
+                { <b>$sort:</b> {"imdb.rating": -1}}, 
+                { <b>$limit:</b> 3 },
 ];
 db.movies.aggregate(pipeline).forEach(printjson);
+</pre>
 
-//$group
-// In aggregation terms, an expression can be a literal, 
-// an expression object, an operator,or a field path.
-
+How to group(aggregation) query result in MongoDB? 
+---------------- 
+> In aggregation terms, an expression can be a literal, an expression object, an operator,or a field path.
+<pre>
 // The $group stage will interpret _id: "$rated" as equivalent to _id: "$$CURRENT.rated".
 var pipeline = [
-                {$group: {
-                          _id: "$rated"
+                {<b>$group:</b> {
+                          _id: <b>"$rated"</b> //field path example
                          }
                 }
                ];
+</pre>               
 
-//ACCUMULATOR EXPRESSIONS
+Accumulator expressions in MongoDB
+------------------------
+#### $sum
+<pre>
 var pipeline = [
-                {$group: {
+                {<b>$group:</b> {
                            _id: "$rated",
-                           "numTitles": { $sum: 1},
+                           "numTitles": { <b>$sum: 1</b>},
                          }
                 }
 ];
 db.movies.aggregate(pipeline).forEach(printjson);
+</pre>
 
-//$avg accumulator
+#### $avg
+<pre>
 {$group: {
            _id: "$rated",
-           "avgRuntime": { $avg: "$runtime"},
+           "avgRuntime": { <b>$avg:</b> "$runtime"},
 }}
 
 // $trunc stage to give integer value
 {$project: {
-"roundedAvgRuntime": { $trunc: "$avgRuntime"}
+            "roundedAvgRuntime": { <b>$trunc:<b> "$avgRuntime"}
 }}
+</pre>
 
-
-
+#### Example 3:
+<pre>
 var pipeline = [
-                { $match: {released: {$lte: new ISODate("2001-01-01T00:00:00Z") }
+                {<b>$match:</b> {released: {$lte: new ISODate("2001-01-01T00:00:00Z") }
                           }
                 },
-                { $group: {
-                      _id: {"$arrayElemAt": ["$genres", 0]},
-                      "popularity": { $avg: "$imdb.rating"},
-                      "top_movie": { $max: "$imdb.rating"},
-                      "longest_runtime": { $max: "$runtime"}
+                {<b>$group:</b> {
+                      _id: {<b>"$arrayElemAt": ["$genres", 0]</b>},
+                      "popularity": { <b>$avg:</b> "$imdb.rating"},
+                      "top_movie": { <b>$max:</b> "$imdb.rating"},
+                      "longest_runtime": { <b>$max:</b> "$runtime"}
                      }
                 },
-                { $sort: { popularity: -1}},
-                { $project: {
+                { <b>$sort:</b> { popularity: -1}},
+                { <b>$project:</b> {
                          _id: 1,
                          popularity: 1,
                          top_movie: 1,
-                         adjusted_runtime: { $add: [ "$longest_runtime",12 ] //12 value is the length of trailers
+                         adjusted_runtime: { <b>$add:</b> [ "$longest_runtime",12 ] // adjusted_runtime = longest_runtime + 12(trailer length)
                        } 
                  } 
                 }
 ];
-
+</pre>
 
 // $first accumulator is used to choose first element of the group
 { $group: {
