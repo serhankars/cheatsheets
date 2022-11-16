@@ -86,10 +86,11 @@ var date = <b>Date()</b>; // will be in local timezeone
 var date = <b>new  Date()</b>; //If you add the new keyword to the constructor, you get the BSON date that is wrapped in ISODate()
 var date = <b>ISODate()</b>;
 
-
+// The first argument to BinData is a binary subtype to indicate the type of information stored.
+// Zero value stands for plain binary data and can be used with text or media files.
 var binData = <b>BinData(0,"VghASDI10ZGUUu")</b>
-> The first argument to BinData is a binary subtype to indicate the type of information stored.  The zero value stands for plain binary data and can be used with text or media files.
 </pre>
+
 ------------------------------------------------
 DATABASE COMMANDS
 ------------------------------------------------
