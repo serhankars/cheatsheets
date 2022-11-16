@@ -109,55 +109,55 @@ db.<b>createView</b>("short_movie_info",
 ------------------------------------------------
 3.QUERYING IN MONGODB
 ==============
-db.users.find({"name":"David"})
-
-db.comments.find() // find all documents
-db.comments.findOne()
+<pre>
+db.users.<b>find({"name":"David"})</b>
+db.comments.<b>find()</b> // find all documents
+db.comments.<b>findOne()</b>
 
 var comments = db.comments.find()
-comments.next()
-comments.hasNext()
+comments.<b>next()</b>
+comments.<b>hasNext()</b>
 
 // All of the queries have the same behavior
-db.comments.find()
-db.comments.find({})
-db.comments.find({"a_non_existent_field" : null})
+db.comments.<b>find()</b>
+db.comments.<b>find({})</b>
+db.comments.<b>find({"a_non_existent_field" : null})</b>
+</pre>
 
-Typing "it" every time will return the next set of 20 documents until the
-collection contains more elements.
+> Documents are retured in a cursor.
+> Typing "it" every time will return the next set of 20 documents until the collection contains more elements.
 
-
-//PROJECTION
-db.comments.find(
-{"name" : "Lauren Carr"},
-{"name" : 1, "date": 1}
+<pre>
+db.comments.<b>find</b>(
+                 {"name" : "Lauren Carr"},
+                 <b>{"name" : 1, "date": 1}</b> //Projection: Selecting the returned fields
 )
 
-db.movies.distinct("rated")
+db.movies.<b>distinct("rated")</b>
+db.movies.<b>distinct</b>("rated", <b>{"year" : 1994}</b>) //all the unique ratings the films that were released in 1994
 
-db.movies.distinct("rated", {"year" : 1994}) //all the unique ratings the films that were released in 1994
+db.movies.<b>count()</b> // without a query it is based on collection's metadata
+db.movies.<b>count({"num_mflix_comments" : 6})</b>
+db.movies.<b>countDocuments({"year": 1999})</b> // query argument is mandatory
+db.movies.<b>countDocuments({})</b> // to count all documents
+db.movies.<b>estimatedDocumentCount()</b> // based on the collection's metadata
 
-db.movies.count()
-db.movies.count({"num_mflix_comments" : 6})
-db.movies.countDocuments({"year": 1999}) //query argument is mandatory
-db.movies.countDocuments({}) // to count all documents
-db.movies.estimatedDocumentCount()// Based on the collections metadata
+db.movies.<b>find({"num_mflix_comments" : 5})</b>
+db.movies.<b>find</b>({ "num_mflix_comments" : <b>{$eq : 5 }</b>}) //returns movies that have exactly 5 comments
 
-db.movies.find({"num_mflix_comments" : 5})
-db.movies.find({ "num_mflix_comments" : {$eq : 5 }}) //returns movies that have exactly 5 comments
+db.movies.<b>find</b>({year : <b>{$gt : 2015}</b>}).count()
+db.movies.<b>find</b>({"released" :<b>{$gte: new Date('2000-01-01')}</b>}).count()
 
-db.movies.find({year : {$gt : 2015}}).count()
-db.movies.find({"released" :{$gte: new Date('2000-01-01')}}).count()
+<b>$lt:</b>  less than
+<b>$lte:</b> less than or equal to
 
-$lt : less than
-$lte: less than or equal to
+db.movies.<b>find</b>({"rated" :<b>{$in : ["G", "PG", "PG-13"]}</b>})
+db.movies.find({"rated" : <b>{$nin : ["G", "PG", "PG-13"]}</b>})
+db.movies.<b>countDocuments</b>(<b>{"non_existing_field" :{$nin : ["a value", "another value", null ]}</b>}) // in mongodb non existent fields always has a value of null
+</pre>
 
-db.movies.find({"rated" :{$in : ["G", "PG", "PG-13"]}})
-db.movies.find({"rated" :{$nin : ["G", "PG", "PG-13"]}})
-db.movies.countDocuments({"nef" :{$nin : ["a value", "another value", null ]}}) // in mongodb non existent fields always has a value of null
-
-
-//LOGICAL OPERATORS
+Logical Operators
+------------------
 db.movies.countDocuments (
 {$and : [{"rated" : "UNRATED"}, {"year" : 2008}]}
 )
