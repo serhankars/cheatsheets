@@ -70,10 +70,10 @@ db.blogs.<b>insertMany</b>(
 How to fetch documents in MongoDB?
 ------------------------------------------------
 <pre>
-db.collection.<br>find(query, projection)</br>
+db.collection.<b>find(query, projection)</b>
 </pre>
-
-2.SOME DATATYPES IN MONGODB
+------------------------------------------------
+2.SOME DATATYPES IN MONGODB & COMMAND SYNTAX
 ============
 <pre>
 var explicitInt = <b>NumberInt</b>("1299")
@@ -91,27 +91,24 @@ var date = <b>ISODate()</b>;
 var binData = <b>BinData(0,"VghASDI10ZGUUu")</b>
 </pre>
 
+Database Commands Syntax in MongoDB
 ------------------------------------------------
-DATABASE COMMANDS
+<pre>
+db.<b>runCommand</b>( { <db_command> } )
+db.<b>runCommand</b>( {currentOp: 1} ) // if we want to retrieve the current operations being executed in MongoDB
+db.<b>getCollectionNames()</b> // some commands have their own functions
+</pre>
+How to create views in MongoDB?
 ------------------------------------------------
-db.runCommand( { <db_command> } )
-
-db.runCommand( {currentOp: 1} ) // if we want to retrieve the current operations being executed in MongoDB
-db.getCollectionNames()
-
-//CRAETING VIEW
-db.createView(
-"short_movie_info",
-"movies",
-[ { $project: { "year": 1, "title":1, "plot":1}}]
+<pre>
+db.<b>createView</b>("short_movie_info",
+              "movies",
+              [ { $project: { "year": 1, "title":1, "plot":1}}]
 )
-
-
-db.short_movie_info.findOne()
-
--------------------------------------------------
-3QUERYING DATA
--------------------------------------------------
+<pre>
+------------------------------------------------
+3. QUERYING IN MONGODB
+==============
 db.users.find({"name":"David"})
 
 db.comments.find() // find all documents
