@@ -105,7 +105,7 @@ db.<b>createView</b>("short_movie_info",
               "movies",
               [ { $project: { "year": 1, "title":1, "plot":1}}]
 )
-<pre>
+</pre>
 ------------------------------------------------
 3. QUERYING IN MONGODB
 ==============
