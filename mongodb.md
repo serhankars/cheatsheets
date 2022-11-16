@@ -533,11 +533,11 @@ db.users.<b>updateMany</b>( {},
                                }
                       },
                       {
-                         <b>$project :<b> {
+                         <b>$project :</b> {
                                      "first_name" : 1,
                                      "last_name" : 1,
                                      "full_name" : {
-                                                     <b>$concat :<b> [<b>{$toUpper : "$first_name"}<b>, " ", "$last_name"]
+                                                     <b>$concat :</b> [<b>{$toUpper : "$first_name"}</b>, " ", "$last_name"]
                                                    }
                                     }
                       }
@@ -616,39 +616,50 @@ db.movies.<b>findOneAndUpdate</b>(
 )
 </pre>
 
-//Removing All Elements with a value
-db.movies.findOneAndUpdate(
+How to delete all elements with certain values from an array field in MongoDB?
+-------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                            {_id : 111},
-                           {$pullAll : {"genre" : ["Action", "Crime"]}},
+                           {<b>$pullAll :</b> {"genre" : ["Action", "Crime"]}},
                            {"returnNewDocument" : true }
 )
+</pre>
 
-//Removing by querying
-db.items.findOneAndUpdate(
+How to delete elements of an array by querying their subproperties from an array field in MongoDB?
+-------------------
+<pre>
+db.items.<b>findOneAndUpdate</b>(
                           {_id : 11},
-                          { $pull : {
-                                     "items" : {
+                          { <b>$pull :</b> {
+                                     "items" : <b>{
                                                  "quantity" : 3,
                                                  "name" : {$regex: "ck$"}
-                                               }
+                                               }</b>
                                     }
                           },
                           {"returnNewDocument" : true }
 )
+</pre>
 
-// updates all
-db.movies.findOneAndUpdate(
+How to set all elements of an array field in MongoDB?
+-------------------
+<pre>
+db.movies.<b>findOneAndUpdate</b>(
                           {_id : 111},
-                          {$set : {"genre.$[]" : "Action"}},
+                          {<b>$set :</b> {<b>"genre.$[]"</b> : "Action"}},
                           {"returnNewDocument" : true}
 )
+</pre>
 
-//Updating a specific array item using filters
-// arrayFilters keyword definethe query condition myElements
-db.items.findOneAndUpdate(
+How to update specific array items using filters in MongoDB?
+-------------------
+> By using <b>arrayFilters</b> keyword define the query condition (myElements).
+<pre>
+db.items.<b>findOneAndUpdate</b>(
                           {_id : 11},
-                          {$set : {
-                                   "items.$[myElements]" : {
+                          {<b>$set : </b>{
+                                   "items<b>.$[myElements]</b>" : {
                                                             "quantity" : 7,
                                                             "price" : 4.5,
                                                             "name" : "marker"
@@ -657,10 +668,10 @@ db.items.findOneAndUpdate(
                           },
                           {
                             "returnNewDocument" : true,
-                            "arrayFilters" : [{"myElements.quantity" : null}]
+                            <b>"arrayFilters" : [{"myElements.quantity" : null}]</b>
                           }
 )
-
+</pre>
 
 *******************************************************
 CHAPTER 7 DATA AGGREGATION
