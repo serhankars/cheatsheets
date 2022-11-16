@@ -107,7 +107,7 @@ db.<b>createView</b>("short_movie_info",
 )
 </pre>
 ------------------------------------------------
-3. QUERYING IN MONGODB
+3.QUERYING IN MONGODB
 ==============
 db.users.find({"name":"David"})
 
