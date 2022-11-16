@@ -158,45 +158,47 @@ db.movies.<b>countDocuments</b>(<b>{"non_existing_field" :{$nin : ["a value", "a
 
 Logical Operators
 ------------------
-db.movies.countDocuments (
-{$and : [{"rated" : "UNRATED"}, {"year" : 2008}]}
+<pre>
+db.movies.<b>countDocuments</b>(
+                                 {<b>$and: [{"rated" : "UNRATED"}, {"year" : 2008}]</b>}
 )
 
-db.movies.find(
-{$or:[
-	{"rated" : "G"},
-	{"year" : 2005},
-	{"num_mflix_comments" : {$gte : 5}}
-]}
+db.movies.<b>find</b>(
+                {
+                  <b>$or:[
+	                     {"rated" : "G"},
+	                     {"year" : 2005},
+	                     {"num_mflix_comments" : {$gte : 5}}
+]</b>}
 
-$nor: The $nor operator is syntactically like $or but behaves in the opposite way.
+<b>$nor:</b> The $nor operator is syntactically like $or but behaves in the opposite way.
 
-db.movies.find(
- {"num_mflix_comments" :
-      {$not : {$gte : 5} }
- }
+db.movies.<b>find</b>(
+                      {
+                        "num_mflix_comments" :<b>{$not : {$gte : 5} }</b>
+                      }
 )
 
-db.movies.find(
-  {"title" : {$regex :"Opera"}}
+db.movies.<b>find</b>(
+               {"title" : <b>{$regex :"Opera"}</b>}
 )
 
-db.movies.find(
-	{"title" : {$regex :"^Opera"}}  //that starts with Opera
+db.movies.<b>find</b>(
+	             {"title" : <b>{$regex :"^Opera"}</b>}  // that <b>starts</b> with Opera
 )
 
-db.movies.find(
-	{"title" : {$regex :"Opera$"}} //that ends with Opera
+db.movies.<b>find</b>(
+	             {"title" : <b>{$regex :"Opera$"}</b>} //that <b>ends</b> with Opera
 )
 
-db.movies.find(
+db.movies.<b>find</b>(
       {
-         "title" :{"$regex" : "the", $options: "i"} // case insensitive option
+         "title" :{<b>"$regex"</b> : "the", <b>$options: "i"</b>} // case insensitive option
       }
 )
 
-// if array field contains at least one element that satisfies the query
-db.movies.find(
+// if <b>array field</b> contains at least one element that satisfies the query
+db.movies.<b>find</b>(
     {  $and :[
                {"cast" : "Charles Chaplin"},
                {"cast": "Edna Purviance"}
@@ -204,93 +206,105 @@ db.movies.find(
     }
 )
 
-// Querying with an array value: Array values must match exactly (order etc.)
-db.movies.find(
-{"languages" : ["German", "English"]}
+// <b>querying with an array value:</b> Array values must match <b>exactly</b> (order etc.)
+db.movies.<b>find<b>(
+                <b>{"languages" : ["German", "English"]}</b>
 )
 
-//$all operator
-//The $all operator finds all those documents where the value of the field contains all
-//the elements, irrespective of their order or size:
-db.movies.find(
-{
-  "languages":{
-               "$all" :[ "English", "French", "Cantonese"]
-              }
-})
+// the <b>$all</b> operator finds all those documents where the value of the field contains all
+// the elements, irrespective of their order or size:
+db.movies.<b>find</b>(
+                      {
+                       "languages":{<b>"$all" :[ "English", "French", "Cantonese"]<b>}
+                      }
+)
+</pre>
 
-//ARRAY PROJECTION 
-db.movies.find
-{"languages" : "Syriac"}, 
-{"languages.$" :1}   //if more than one element is matched, the $ operator projects only the first matching element
+How to project array fields in MongoDB?
+--------------- 
+<pre>
+db.movies.find(
+                {"languages" : "Syriac"}, 
+                {"languages<b>.$</b>" :1}   // if more than one element is matched, the <b>$ operator projects only the first matching element</b>
 )
 
-db.movies.find(
-{
-   "title" : "Youth Without Youth"
-},
-{"languages" : {$slice : 3}} //first three elements of the array (you can query different field and still use this operator)
-).pretty()
+db.movies.<b>find</b>({"title" : "Youth Without Youth"},
+               {"languages" : <b>{$slice : 3}</b>} //first three elements of the array (you can query different field and still use this operator)
+).<b>pretty()</b>
 
-{"languages" : {$slice : -2}} // last two elements
+{"languages" : <b>{$slice : -2}</b>} // last two elements
+{"languages" : <b>{$slice : [2, 4]</b>}} // skip first two elements and get four elements
+</pre>
 
-{"languages" : {$slice : [2, 4]}} //skip first two elements and get four elements
-
-
-//QUERYING NESTED OBJECTS: This means that all the field-value pairs, along with the order of the fields must match exactly.
-db.movies.find(
+How to query nested objects in MongoDB?
+---------------------- 
+> This means that <b>all the field-value pairs, along with the order of the fields must match exactly.</b>
+<pre>
+db.movies.<b>find</b>(
                {"awards":
-                        {"wins": 1, "nominations": 0, "text": "1 win."}
+                        <b>{"wins": 1, "nominations": 0, "text": "1 win."}</b>
                }
 )
+</pre>
 
-//QUERYING NESTED OBJECT FIELDS
+How to query by nested objects' fields in MongoDB?
+-----------------------------
+<pre>
 db.movies.find(
-                {"awards.wins" : 4}
+                <b>{"awards.wins" : 4}</b>
 )
+</pre>
 
-//To project only specified fields.
+How to project nested objects' fields in MongoDB?
+---------------------------------
+<pre>
 db.movies.find(
                {},
                {
-                "awards.wins" :1,
+                <b>"awards.wins" :1,
                 "awards.nominations" : 1,
                 "_id":0
+                </b>
                }
 )
+</pre>
 
-//LIMITING
+How to limit query result in MongoDB?
+---------------------
+<pre>
 db.movies.find(
                {"cast" : "Charles Chaplin"},
                {"title": 1, "_id" :0}
-).limit(3)
+).<b>limit(3)</b>
 
 limit(0) //returns all
+</pre>
 
-Different MongoDB drivers can have different batch sizes. 
-However, for a single query, the batch size can be set.
+> Different MongoDB drivers can have different batch sizes. However, for a single query, the batch size can be set.
 
+<pre>
 db.movies.find(
                {"cast" : "Charles Chaplin"},
                {"title": 1, "_id" :0}
-).batchSize(5)
+).<b>batchSize(5)</b>
+</pre>
 
-
+> The skip() operation does not make use of any indexes, so it performs nicely on a smaller collection but may lag noticeably on larger collections.
+<pre>
 db.movies.find(
-			{"cast" : "Charles Chaplin"},
-			{"title": 1, "_id" :0}
-).skip(2)  
-// The skip() operation does not make use of any indexes, so it performs nicely on a smaller collection
-// but may lag noticeably on larger collections.
+			         {"cast" : "Charles Chaplin"},
+			         {"title": 1, "_id" :0}
+).<b>skip(2)</b>  
 
 db.movies.find(
 			{"cast" : "Charles Chaplin"},
 			{"title" : 1, "_id" :0}
-).sort({"title" : 1})  //1:ascending -1:descending
+).<b>sort({"title" : 1}) //1:ascending -1:descending</b>
+</pre>
+------------------------------------
 
---------------------------------------------
-	INSERT UPDATE DELETE
---------------------------------------------
+4.INSERT, UPDATE, DELETE OPERATIONS
+==============
 
 db.collection.insert( <Document To Be Inserted>)
 
