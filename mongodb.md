@@ -813,7 +813,9 @@ db.users.aggregate(pipeline).forEach(printjson);
 > Using <b>$unwind</b> operator, you can deconstruct the array field and  
 > create a new document for each element in the array field.
 
-**$unwind** converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}  
+**$unwind** converts this:  
+{a: 1, b: 2, c: [1, 2, 3, 4]}    
+  
 To this:  
 {"a" : 1, "b" : 2, "c" : 1 }  
 {"a" : 1, "b" : 2, "c" : 2 }  
