@@ -794,6 +794,7 @@ How to randomly sample a certain amount of documents in MongoDB?
 
 How to join two collections in MongoDB?
 ----------------
+> <b>$lookup</b> creates a new array field filled with related documents.
 <pre>
 var pipeline = [
                 { $match: { $or: [{"name": "Catelyn Stark"},{"name": "Ned Stark"}]}},
@@ -809,19 +810,23 @@ var pipeline = [
 db.users.aggregate(pipeline).forEach(printjson);
 </pre>
 
-//$unwind
-Converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}
-To this: 
-{"a" : 1, "b" : 2, "c" : 1 }
-{"a" : 1, "b" : 2, "c" : 2 }
-{"a" : 1, "b" : 2, "c" : 3 }
-{"a" : 1, "b" : 2, "c" : 4 }
+> Using <b>$unwind</b> operator, you can deconstruct the array field and  
+> create a new document for each element in the array field.
 
-{ $unwind: "$comments"}
+**$unwind** converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}  
+To this: 
+{"a" : 1, "b" : 2, "c" : 1 }  
+{"a" : 1, "b" : 2, "c" : 2 }  
+{"a" : 1, "b" : 2, "c" : 3 }  
+{"a" : 1, "b" : 2, "c" : 4 }  
+
+<pre>
+{ <b>$unwind:</b> "$comments"}
+<pre>
 
 How to save output of a query pipeline into another collection in MongoDB?
 ----------------------
-> By using the $out operator in a stage. It takes the name of desired output collection.  
+> By using the <b>$out</b> operator in a stage. It takes the name of desired output collection.  
 > It will either create a new collection or completely replace an existing collection.  
 > $out must output to the same database as the aggregation target.
 <pre>
@@ -836,10 +841,10 @@ How to save output of a query pipeline into another collection in MongoDB?
 <pre>
 { <b>$merge:</b> {
      <b>into:</b> <collection> -or- { db: <db>, coll: <collection> },
-     <b>on:</b> <identifier field> -or- [ <identifier field1>, ...],  // Optional
-     <b>let:</b> <variables>,                                         // Optional
+     <b>on:</b> <identifier field> -or- [ <identifier field1>, ...],// Optional
+     <b>let:</b> <variables>,// Optional
      <b>whenMatched:</b> <replace|keepExisting|merge|fail|pipeline>,  // Optional
-     <b>whenNotMatched:</b> <insert|discard|fail>                     // Optional
+     <b>whenNotMatched:</b> <insert|discard|fail>// Optional
 } }
 </pre>
 
