@@ -983,7 +983,7 @@ db.collection.<b>createIndex</b>(
 
 How to make sure that documets are deleted after a certain amount of time?
 ---------------------
-> By using Time to live (TTL) indexes  
+> By using Time to live (TTL) indexes!  
 > The document (not the index itself) will be deleted after a time.  
 > The index can be defined only on a field of date type
 <pre>
@@ -995,38 +995,59 @@ db.collection.<b>createIndex</b>({ field: type}, <b>{ expireAfterSeconds: second
 db.collection.createIndex({ field1 : type, field2: type2, ...}, { sparse:
 true })
 
-//PARTIAL INDEX(Index for documents that satisfy some condition)
-db.movies.createIndex(
+How to create an index only for some documents in a collection in MongoDB?
+-------------------------
+> By using <b>partial indices</b>  
+> A partial index is an index for documents that satisfy some condition.
+db.movies.<b>createIndex</b>(
                       {title: 1, type:1},
-                      {
+                      <b>{
                         partialFilterExpression: {year : { $gt: 1950}}
-                      }
+                      }</b>
 )
 
-//case insensitive index
-db.movies.createIndex(
+How to create a case insensitive index in MongoDB?
+----------------------
+<pre>
+db.movies.<b>createIndex</b>(
                        {title: 1},
-                       {
-                         collation: {
-                                      locale: 'en', strength: 2
-                                    }
-                        }
+                       <b>{
+                         collation: {locale: 'en', strength: 2}
+                       }</b>
 )
+</pre>
 
-db.collection.dropIndex(indexNameOrSpecification);
+How to drop an index on a collection in MongoDB?
+---------------------
+<pre>
+db.collection.<b>dropIndex(indexNameOrSpecification);</b>
+</pre>
 
-db.collection.dropIndexes() //drops all indexes except default _id index
+How to drop all indexes on a collection in MongoDB?
+---------------------
+<pre>
+db.collection.<b>dropIndexes();</b> //drops all indexes except default _id index
+</pre>
 
-db.movies.explain("executionStats").find()
+How to analyze index performance without dropping it in MongoDB?
+---------------------
+<pre>
+db.collection.<b>hideIndex(indexNameOrSpecification)</b>; //to analyze performance impact without removing
+db.movies.<b>explain("executionStats")</b>.find()
+db.collection.<b>unhideIndex(indexNameOrSpecification)</b>;
+db.movies.<b>explain("executionStats")</b>.find()
+</pre>
 
-db.collection.hideIndex(indexNameOrSpecification); //to analyze performance impact without removing
-db.collection.unhideIndex(indexNameOrSpecification);
-
-db.users.createIndex(
-                     { name : "text"} //This is text index. Since it is not sorted it is faster. Can be defined on text fields and arrays with texts.
+What is the best way to create index for text search queries in MongoDB?
+--------------------
+> A collection can have <b>at most one</b> text index.  
+> Text index can be defined on text fields and arrays with texts.
+<pre>
+db.users.<b>createIndex</b>(
+                     { name : <b>"text"</b>}
 )
+</pre>
 
-// We can give hints to MongoDB query planner to use which index
-db.users.find().hint(
-                     { index }
-)
+How to give hint to MongoDB for using a specific index?
+------------------
+db.users.find().<b>hint({ index })</b>
