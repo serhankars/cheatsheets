@@ -824,7 +824,7 @@ To this:
 
 <pre>
 { <b>$unwind:</b> "$comments"}
-<pre>
+</pre>
 
 How to save output of a query pipeline into another collection in MongoDB?
 ----------------------
