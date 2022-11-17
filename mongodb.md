@@ -33,7 +33,7 @@ writeConcern: <document>
 <pre>
 use yourDatabaseName;
 db.myCollectionName.<b>insert</b>(
-                    {"name" : "Yahya A", "company" : "Sony"}
+                       {"name" : "Yahya A", "company" : "Sony"}
 );
 </pre>
 
@@ -124,7 +124,7 @@ db.comments.<b>find({})</b>
 db.comments.<b>find({"a_non_existent_field" : null})</b>
 </pre>
 
-> Documents are retured in a cursor.
+> Documents are returned in a cursor.
 > Typing "it" every time will return the next set of 20 documents until the collection contains more elements.
 
 <pre>
@@ -184,17 +184,17 @@ db.movies.<b>find</b>(
 )
 
 db.movies.<b>find</b>(
-	          {"title" : <b>{$regex :"^Opera"}</b>}  // that <b>starts</b> with Opera
+	      {"title" : <b>{$regex :"^Opera"}</b>}  // that <b>starts</b> with Opera
 )
 
 db.movies.<b>find</b>(
-	          {"title" : <b>{$regex :"Opera$"}</b>} //that <b>ends</b> with Opera
+	      {"title" : <b>{$regex :"Opera$"}</b>} //that <b>ends</b> with Opera
 )
 
 db.movies.<b>find</b>(
-      {
-         "title" :{<b>"$regex"</b> : "the", <b>$options: "i"</b>} // case insensitive option
-      }
+        {
+           "title" :{<b>"$regex"</b> : "the", <b>$options: "i"</b>} // case insensitive option
+        }
 )
 
 // if <b>array field</b> contains at least one element that satisfies the query
@@ -292,13 +292,13 @@ db.movies.find(
 > The skip() operation does not make use of any indexes, so it performs nicely on a smaller collection but may lag noticeably on larger collections.
 <pre>
 db.movies.<b>find</b>(
-       {"cast" : "Charles Chaplin"},
-		   {"title": 1, "_id" :0}
+          {"cast" : "Charles Chaplin"},
+		      {"title": 1, "_id" :0}
 ).<b>skip(2)</b>  
 
 db.movies.<b>find</b>(
-			         {"cast" : "Charles Chaplin"},
-			         {"title" : 1, "_id" :0}
+			      {"cast" : "Charles Chaplin"},
+			      {"title" : 1, "_id" :0}
 ).<b>sort({"title" : 1}) //1:ascending -1:descending</b>
 </pre>
 ------------------------------------
@@ -362,13 +362,13 @@ db.users.<b>replaceOne</b>(
 
 <pre>
 db.movies.<b>findOneAndReplace</b>(
-                                   {"title" : "Macbeth"}, 
-                                   {"title" : "Macbeth", "latest" : true},
-                                   {
-                                    <b>sort:</b> {"_id" : -1},
-                                    <b>projection:</b> {"_id" : 0},
-					                          <b>returnNewDocument:</b> true
-                                   }
+                                {"title" : "Macbeth"}, 
+                                {"title" : "Macbeth", "latest" : true},
+                                {
+                                <b>sort:</b> {"_id" : -1},
+                                <b>projection:</b> {"_id" : 0},
+                                <b>returnNewDocument:</b> true
+                                }
 )
 </pre>
 
