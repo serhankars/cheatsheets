@@ -983,8 +983,8 @@ db.collection.<b>createIndex</b>(
 
 How to make sure that documets are deleted after a certain amount of time?
 ---------------------
-> By using Time to live (TTL) indexes
-> The document (not the index itself) will be deleted after a time.
+> By using Time to live (TTL) indexes  
+> The document (not the index itself) will be deleted after a time.  
 > The index can be defined only on a field of date type
 <pre>
 db.collection.<b>createIndex</b>({ field: type}, <b>{ expireAfterSeconds: seconds }</b>)
