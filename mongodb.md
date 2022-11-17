@@ -814,7 +814,7 @@ db.users.aggregate(pipeline).forEach(printjson);
 > create a new document for each element in the array field.
 
 **$unwind** converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}  
-To this: 
+To this:  
 {"a" : 1, "b" : 2, "c" : 1 }  
 {"a" : 1, "b" : 2, "c" : 2 }  
 {"a" : 1, "b" : 2, "c" : 3 }  
