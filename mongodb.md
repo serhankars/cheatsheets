@@ -809,7 +809,6 @@ var pipeline = [
 db.users.aggregate(pipeline).forEach(printjson);
 </pre>
 
-
 //$unwind
 Converts this: {a: 1, b: 2, c: [1, 2, 3, 4]}
 To this: 
@@ -829,14 +828,20 @@ How to save output of a query pipeline into another collection in MongoDB?
 { <b>$out:</b> "myOutputCollection"}
 </pre>
 
+> From Mongo 4.2 also $merge is available.  
+> The <b>$merge</b> operator must be the last stage in the pipeline.  
+> You can merge into a collection which is in another database.
 
-//From Mongo 4.2 $merge is available
-{ 
-	$merge: {
-			// This can also accept {db: <db>, coll: <coll>} to
-			//merge into a different dbinto: "myOutputCollection",
-              }
-}
+#### Syntax:
+<pre>
+{ <b>$merge:</b> {
+     <b>into:</b> <collection> -or- { db: <db>, coll: <collection> },
+     <b>on:</b> <identifier field> -or- [ <identifier field1>, ...],  // Optional
+     <b>let:</b> <variables>,                                         // Optional
+     <b>whenMatched:</b> <replace|keepExisting|merge|fail|pipeline>,  // Optional
+     <b>whenNotMatched:</b> <insert|discard|fail>                     // Optional
+} }
+</pre>
 
 ### A pipeline example with all operators so far:
 <pre>
