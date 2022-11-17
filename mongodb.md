@@ -33,7 +33,7 @@ writeConcern: <document>
 <pre>
 use yourDatabaseName;
 db.myCollectionName.<b>insert</b>(
-                                  {"name" : "Yahya A", "company" : "Sony"}
+                    {"name" : "Yahya A", "company" : "Sony"}
 );
 </pre>
 
