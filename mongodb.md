@@ -820,12 +820,15 @@ To this:
 
 { $unwind: "$comments"}
 
+How to save output of a query pipeline into another collection in MongoDB?
+----------------------
+> By using the $out operator in a stage. It takes the name of desired output collection.  
+> It will either create a new collection or completely replace an existing collection.  
+> $out must output to the same database as the aggregation target.
+<pre>
+{ <b>$out:</b> "myOutputCollection"}
+</pre>
 
-// SAVING OUPUT OF A QUERY TO ANOTHER COLLECTION
-$out; the only parameter to specify is the desired output collection.
-{ $out: "myOutputCollection"}
-It will either create a new collection or completely replace an existing collection.
-$out must output to the same database as the aggregation target.
 
 //From Mongo 4.2 $merge is available
 { 
@@ -835,45 +838,50 @@ $out must output to the same database as the aggregation target.
               }
 }
 
-//AN EXAMPLE
+### A pipeline example with all operators so far:
+<pre>
 var pipeline = [
-                { $sample: {size: 5000}},
-                { $group: {
-                           _id: "$movie_id",
-                           "sumComments": { $sum: 1}
+                { <b>$sample:</b> {size: 5000}},
+                { <b>$group:</b> {
+                           <b>_id:</b> "$movie_id",
+                           "sumComments": <b>{ $sum: 1}</b>
                           }
                 },
-               { $sort: { "sumComments": -1}},
-               { $limit: 5},
-               { $lookup: {
-                            from: "movies",
-                            localField: "_id",
-                            foreignField: "_id",
-                            as: "movie"
+               { <b>$sort:</b> { "sumComments": -1}},
+               { <b>$limit:</b> 5},
+               { <b>$lookup:</b> {
+                            <b>from:</b> "movies",
+                            <b>localField:</b> "_id",
+                            <b>foreignField:</b> "_id",
+                            <b>as:</b> "movie"
                           }
                },
-               { $unwind: "$movie" },
-               { $project: {
+               {<b>$unwind:</b> "$movie" },
+               {<b>$project:</b> {
                              "movie.title": 1,
                              "movie.imdb.rating": 1,
                              "sumComments": 1,
                            }
                },
-               { $out: "most_commented_movies" }
+               {<b>$out:</b> "most_commented_movies" }
 ];
+</pre>
 
-//AGGREGATE OPTIONS
-maxTimeMS: The amount of time an operation may be processed before MongoDB kills it.
-allowDiskUse: true means using disk is allowed to handle massive datasets
-bypassDocumentValidation: No validation of output when using $out or $merge
-comment: This options is for debugging allows a string to be specified
+### Some aggreagate options:
+> Pass options object to aggregate like below:  
+> db.movies.<b>aggregate</b>(pipeline, <b>options</b>);
 
+* <b>maxTimeMS:</b> The amount of time an operation may be processed before MongoDB kills it.
+* <b>allowDiskUse:</b> true means using disk is allowed to handle massive datasets
+* <b>bypassDocumentValidation:</b> No validation of output when using $out or $merge
+* <b>comment:</b> This options is for debugging allows a string to be specified
+
+<pre>
 var options = {
-               maxTimeMS: 30000,
-               allowDiskUse: true
+               <b>maxTimeMS:</b> 30000,
+               <b>allowDiskUse:</b> true
 }
-db.movies.aggregate(pipeline, options);
-
+</pre>
 -----------------------------
 
 6.INDEXES IN MONGODB
@@ -1050,4 +1058,6 @@ db.users.<b>createIndex</b>(
 
 How to give hint to MongoDB for using a specific index?
 ------------------
+<pre>
 db.users.find().<b>hint({ index })</b>
+</pre>
