@@ -911,7 +911,7 @@ How to list indexes on a collection in MongoDB?
 db.movies.<b>getIndexes()</b>
 </pre>
 
-How to give a specific name to indexes in MongoDB?
+How to give a specific name to an index in MongoDB?
 ---------------------
 <pre>
 db.theaters.<b>createIndex</b>( 
@@ -920,8 +920,7 @@ db.theaters.<b>createIndex</b>(
 );
 </pre>
 
-
-How to create indexes with multiple fields in MongoDB?
+How to create an index with multiple fields in MongoDB?
 ---------------------
 <pre>
 db.movies.<b>createIndex</b>(
@@ -929,45 +928,68 @@ db.movies.<b>createIndex</b>(
 )
 </pre>
 
-How to create indexes on subdocument's fields in MongoDB?
+How to create an index on nested document's fields in MongoDB?
 ---------------------
 <pre>
 db.theaters.<b>createIndex</b>(
                         { <b>"location.address.zipcode" :</b> 1}
 )
-<pre>
+</pre>
 
-db.theaters.createIndex(
+How to create an index on the embedded document (not on its fields) in MongoDB?
+---------------------
+<pre>
+db.theaters.<b>createIndex</b>(
                         { "location" : 1}
 )
+</pre>
 
-//Wildcard indexes for dynamic schema
-db.products.createIndex(
-                        { "specifications.$**" : 1}
+How to create an index with wildcards in MongoDB?
+---------------------
+> Creating indexes with wildcars is useful for indexing "to be inserted-future" fields.
+<pre>
+db.products.<b>createIndex</b>(
+                        { "specifications<b>.$**</b>" : 1}
 )
+</pre>
 
-//For all fields
-db.products.createIndex(
-                        { "$**" : 1 }
+How to create an index with wildcards for all fields in MongoDB?
+---------------------
+<pre>
+db.products.<b>createIndex</b>(
+                        <b>{ "$**" : 1 }</b>
 )
+</pre>
 
-//You can also omit wildcard indexes
-db.products.createIndex(
+How to omit specific fields for indexing in MongoDB?
+---------------------
+<pre>
+db.products.<b>createIndex</b>(
                          { "$**" : 1 },
                          {
-                           "wildcardProjection" : { "name" : 0 }
+                           <b>"wildcardProjection" : { "name" : 0 }</b>
                          }
 )
+</pre>
 
-db.collection.createIndex(
+How to create a unique index in MongoDB?
+---------------------
+<pre>
+db.collection.<b>createIndex</b>(
                           { field: type},
-                          { unique: true }
+                          <b>{ unique: true }</b>
 )
+</pre>
 
-// Time to live TTL indexes
-// Document (not the index) will be deleted after a time
-// The index can be defined on a field of date type
-db.collection.createIndex({ field: type}, { expireAfterSeconds: seconds })
+How to make sure that documets are deleted after a certain amount of time?
+---------------------
+> By using Time to live (TTL) indexes
+> The document (not the index itself) will be deleted after a time.
+> The index can be defined only on a field of date type
+<pre>
+db.collection.<b>createIndex</b>({ field: type}, <b>{ expireAfterSeconds: seconds }</b>)
+</pre>
+
 
 //A sparse index will not have entries from the collection where the indexed field does not exist
 db.collection.createIndex({ field1 : type, field2: type2, ...}, { sparse:
