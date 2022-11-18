@@ -1083,7 +1083,7 @@ How to get the size of Oplog in MongoDB?
 > The value is in bytes
 <pre>
 db.<b>oplog.rs.stats().maxSize</b>
-<pre>
+</pre>
 
 
 How to list cluster members in MongoDB?
@@ -1123,7 +1123,6 @@ db.<b>getMongo().setReadPref('primaryPreffered')</b>
 * secondary
 * secondaryPreferred
 * nearest
-
 
 How to set write concern option in write operations in MongoDB?
 -------------------------
