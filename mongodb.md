@@ -1073,3 +1073,60 @@ How to give hint to MongoDB for using a specific index?
 <pre>
 db.users.find().<b>hint({ index })</b>
 </pre>
+---------------------------
+
+MongoDB REDUNDANCY
+===================
+
+How to get the size of Oplog in MongoDB?
+---------------------
+> The value is in bytes
+<pre>
+db.<b>oplog.rs.stats().maxSize</b>
+<pre>
+
+
+How to list cluster members in MongoDB?
+---------------------
+<pre>
+rs.<b>status().members</b>
+</pre>
+
+How to learn connection information in MongoDB?
+--------------------
+> You can learn if you connected to a replica set or not.  
+> Replica set connections is shown like: [replicaset name]/server1:port1, server2:port2,... 
+
+<pre>
+db.<b>getMongo()</b>
+</pre>
+
+How to enable read operations on secondary nodes using mongoshell in MongoDB?
+--------------------
+<pre>
+rs.<b>slaveOk()</b>
+</pre>
+
+How to get&set read preference of a cluster in MongoDB?
+-------------------------
+<pre>
+db.<b>getMongo().getReadPrefMode()</b>
+
+db.<b>getMongo().setReadPref('primaryPreffered')</b>
+</pre>
+
+#### Read Preference Options:
+
+* null(default)
+* primary
+* primaryPreferred
+* secondary
+* secondaryPreferred
+* nearest
+
+
+How to set write concern option in write operations in MongoDB?
+-------------------------
+<pre>
+db.new_collection.<b>insert</b>({"_id":1, "info": "test writes"},<b>{w:2}</b>)
+</pre>
