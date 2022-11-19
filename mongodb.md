@@ -1075,7 +1075,7 @@ db.users.find().<b>hint({ index })</b>
 </pre>
 ---------------------------
 
-MongoDB REDUNDANCY
+7.MongoDB REDUNDANCY
 ===================
 
 How to get the size of Oplog in MongoDB?
@@ -1084,7 +1084,6 @@ How to get the size of Oplog in MongoDB?
 <pre>
 db.<b>oplog.rs.stats().maxSize</b>
 </pre>
-
 
 How to list cluster members in MongoDB?
 ---------------------
@@ -1128,4 +1127,40 @@ How to set write concern option in write operations in MongoDB?
 -------------------------
 <pre>
 db.new_collection.<b>insert</b>({"_id":1, "info": "test writes"},<b>{w:2}</b>)
+</pre>
+
+How to add a node to a replica set in MongoDB?
+---------------------
+<pre>
+rs.<b>add({host: "node4.domain.com:27017", hidden : true,votes : 1})</b>//adds a hidden node
+</pre>
+
+How to remove a node from a replica set in MongoDB?
+---------------------
+> Removing a node from replica set do not delete data files and the node instance.
+
+<pre>
+rs.<b>remove({ <hostname.com> })</b>//adds a hidden node
+</pre>
+
+How to configure cluster in MongoDB?
+---------------------
+<pre>
+var conf = <b>rs.config()</b>
+<b>conf.members[0].priority=1</b>
+conf.members[1].priority=0.5
+conf.members[2].priority=0
+rs.<b>reconfig(conf)</b>
+</pre>
+
+How to transfer primary state in a cluster to another node in MongoDB?
+--------------
+<pre>
+rs.<b>stepDown()</b>
+</pre>
+
+How to verify connected node is primary in MongoDB?
+-------------
+<pre>
+rs.<b>isMaster()</b>
 </pre>
