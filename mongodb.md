@@ -1145,6 +1145,10 @@ rs.<b>remove({ <hostname.com> })</b>//adds a hidden node
 
 How to configure cluster in MongoDB?
 ---------------------
+> The range for priority is between 0 and 1000 (inclusive).  
+> Default priority value is 0.  
+> Instances with 0 priority can not be primary!  
+
 <pre>
 var conf = <b>rs.config()</b>
 <b>conf.members[0].priority=1</b>
@@ -1164,3 +1168,19 @@ How to verify connected node is primary in MongoDB?
 <pre>
 rs.<b>isMaster()</b>
 </pre>
+
+How to shutdown an instance in MongoDB?
+--------------
+<pre>
+db.<b>shutdownServer()</b>
+</pre>
+
+What are the node types in a cluster in MongoDB?
+--------------------
+
+* **PRIMARY:** Used for read write operations.
+* **SECONDARY:** Used for read operations, replicates from primary servers Oplog records.
+* **READ ONLY:** Secondary and can never become primary 
+* **ARBITER:** No replication so no data, the purpose of existence is to vote in elections
+* **HIDDEN:** Not for read operations, for datawarehousing applications 
+* **DELAY:** Used to obtain older snapshots of primary
