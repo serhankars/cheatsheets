@@ -207,6 +207,41 @@
                    { 
                      return abs(a) > abs(b);
                     });
+
+# 5. Bitwise Operations
+
+* Negative of a number is the bitwise not of a number +1 (with sign bit 1)
+
+    0 000 0010 => 2
+    1 111 1101 => ~2
+    1 111 1110 => -2 = ~2+1
+    
+* <b>-n = (~n)+1</b>
+* <b>-n = ∼(n−1)</b>
+* <b> n | (∼n) = −1<b>
+
+## Turning of the rightmost set bit:
+* n & (n−1)
+<pre>
+    0 000 0011 => 3
+    0 000 0010 => 3-1 =2
+    0 000 0010 => right most set bit turned to 0
+</pre>
+
+## To get only the right most set bit: 
+* n & (-n)
+
+<pre>
+    0 000 0010 => 2
+    1 111 1110 => -2
+    0 000 0010 => 2 & -2
+</pre>
+
+# 6. C Library Functions
+ <b>void *memset(void *str, int c, size_t n)</b> copies the character c (an unsigned char) to the first n characters of the string pointed to, by the argument str.
+    
+     memset(memo, -1, sizeof(memo));
+     
 ## Heap Operations
 > The element with the highest value is always pointed by <b>first.</b> The order of the other elements depends on the particular implementation, but it is consistent throughout all heap-related functions of this header.
 
