@@ -1,3 +1,7 @@
+<div style="text-align: center;"> 
+<img src="./MongoDB_Logo.png"></div>
+
+
 1.INTRODUCTION
 ============
 
