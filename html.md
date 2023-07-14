@@ -1,6 +1,6 @@
 <p align="center">
   <img src="html.png" />
-</p>
+</>
 
 #  Semantic HTML 
 
@@ -387,3 +387,101 @@ Defines a semantic group of one or more columns in a table for formatting.
 
 Defines a semantic column in a table.
 
+
+# HTML **&lt;meta&gt;** tags 
+
+Earlier in the course, you learned about meta tags and how you can leverage them to convey information to search engines to better categorize your pages. We recommend that you keep this cheat sheet handy when building your web applications. The structure of a meta tag is as follows.
+
+**Name**
+
+The name of the property can be anything you like, although browsers usually expect a value they understand and can take an action upon. An example would be **&lt;meta name="author" content="name"&gt;** to state the author of the page. 
+
+
+
+**Content** 
+
+
+The content field specifies the property's value. For example, you can use **&lt;meta name="language" content="english"&gt;**, to specify the language of the webpage to search engines. 
+
+**Charset** 
+
+
+The charset is a special field that lets you specify the character encoding used for the page so that the browser can display it properly. The most frequently used is utf-8, and you would add it to your HTML header as follows: **&lt;meta charset="UTF-8"&gt;**  
+
+**HTTP-equiv** 
+
+
+This field stands for HTTP equivalent, and it’s used to simulate HTTP response headers. This is rare to see, and it’s recommended to use HTTP headers over HTML http-equiv meta tags. For example, the next tag would instruct the browser to refresh the page every 30 minutes: **&lt;meta http-equiv="refresh" content="30"&gt;** 
+
+Basic meta tags (meta tags For SEO) 
+
+**&lt;meta name="description"/&gt;** provides a brief description of the web page 
+
+
+
+**&lt;meta name=”title”/&gt;** specifies the title of the web page 
+
+
+
+**&lt;meta name="author" content="name"&gt;** specifies the author of the web page  
+
+
+
+**&lt;meta name="language" content="english"&gt;** specifies the language of the web page 
+
+
+
+
+
+**&lt;meta name="robots" content="index,follow" /&gt;** tells search engines how to crawl or index a certain page 
+
+
+
+**&lt;meta name="google"/&gt;** tells Google not to show the sitelinks search box for your page when showing search results 
+
+
+
+**&lt;meta name="googlebot" content=”notranslate” /&gt;** tells Google you don’t want to provide an automatic translation for your page if the user uses a different language  
+
+
+
+**&lt;meta name="revised" content="Sunday, July 18th, 2010, 5:15 pm" /&gt;** specifies the last modified date and time on which you have made certain changes 
+
+
+
+**&lt;meta name="rating" content="safe for kids"&gt;** specifies the expected audience for your page 
+
+
+
+**&lt;meta name="copyright" content="Copyright 2022"&gt;** specifies a Copyright 
+
+**&lt;meta http-equiv="..."/&gt;** tags
+
+ **&lt;meta http-equiv="content-type" content="text/html"&gt;** specifies the format of the document returned by the server 
+
+
+
+**&lt;meta http-equiv="default-style"/&gt;**  specifies the format of the styling document 
+
+
+
+**&lt;meta http-equiv="refresh"/&gt;** specifies the duration of the page before it’s considered stale 
+
+
+
+**&lt;meta http-equiv=”Content-language”/&gt;** specifies the language of the page 
+
+
+
+**&lt;meta http-equiv="Cache-Control" content="no-cache"&gt;** instructs the browser how to cache your page 
+Responsive design/mobile meta tags 
+
+**&lt;meta name="format-detection" content="telephone=yes"/&gt;** indicates that telephone numbers should appear as hypertext links that can be clicked to make a phone call 
+
+
+
+**&lt;meta name="HandheldFriendly" content="true"/&gt;** specifies that the page can be properly visualized on mobile devices 
+
+
+
+**&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;** specifies the area of the window in which web content can be see
