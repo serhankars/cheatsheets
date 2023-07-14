@@ -1,4 +1,4 @@
-![Docker](./Docker-Logo.png "Docker")
+![Docker](./assets/Docker-Logo.png "Docker")
 # INTRODUCTION TO DOCKER
 
 **Namespaces** are Linux kernel feature that provides the ability to expose different "views" of your system to applications running within it.

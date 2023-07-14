@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="html.png" />
+  <img src="/assets/html.png" />
 </>
 
 #  Semantic HTML 
