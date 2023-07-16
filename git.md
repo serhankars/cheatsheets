@@ -28,10 +28,12 @@ Amends will add changes to the previous commit
     git commit -m "message" --amend
 
 --no-edit means I don't want to change the last commit's message
-    git commit --ammend --no-edit
---ammend will change the last commit's number so you should not ammend public commits.
+    
+    git commit --amend --no-edit
 
-**Working area:** not added changes 
+--amend will change the last commit's number so you should not amend public commits.
+
+**Working area:** not added changes  
 **Staging area:** where git puts changes
 
 A file can be in both at the same time.
@@ -43,8 +45,9 @@ To take a file-folder out of the staging area
 To select the branch to work on
 ================
 
-    git checkout
-You can switch to a non-existign branch with:
+    git checkout {branchname}
+You can switch to a non-existing branch (and create it) with:
+
     git checkout -b {new_branch_name}
 
 You can restore working tree files with git checkout
@@ -55,6 +58,8 @@ You can restore working tree files with git checkout
     git log --all => tüm commitleri listeliyor
 
 HEAD => Which version we are currently viewing
+HEAD normally points to the most recent commit of a branch.
+You can make head point to a specific commit.
 
 Eski bir commite dönüp (checkoutlayıp) bunun üzerinde değişiklik yaparsak git yeni bir branch oluşturuyor.
 
@@ -62,13 +67,10 @@ Print commit history as a tree
 ==============================
     git log --all --graph
 
-We can just say 
-==================
-    git checkout {branch name}
-
-It restores files content to old version
-====================
-    git checkout "commit hash" filename
+ 
+Discard all unstaged changes in the current directory (see git reset for more undo-like commands):
+====    
+    git checkout .
 
 How to set "git aliases"
 ===========================
@@ -85,7 +87,6 @@ For adding git local files to remote repository
         git remote add {{remote_name}} {{remote_url}}
         git remote add origin https://github.com/serhankars/git-details.git
 
-
 For listing remote repository
 =======================
     git remote -v
@@ -94,8 +95,7 @@ For listing remote repository
 
 We push 1 branch of commits at a time
 =====================
-> git push {target} {which_branch_to_push}
-    
+    git push {target} {which_branch_to_push}
     git push origin master
 
 Remote repository ekledikten sonra
@@ -141,11 +141,14 @@ We can not use space characters in branch names
 
     git checkout {branchname}
 
-Son (bir) commiti silmek için
+To delete last one commit
 ================
     git reset --hard HEAD^
 
-Son (iki) commiti silmek için
+^ operator shows the parent commit.
+So **HEAD^^** is equal to the parent of a parent of HEAD.
+
+To delete last **two** commits
 ================
     git reset --hard HEAD~2
 
